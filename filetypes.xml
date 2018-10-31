@@ -1,0 +1,12 @@
+<application>
+  <component name="FileTypeManager" version="17">
+    <ignoreFiles list="*$py.class;*.hprof;*.pyc;*.pyo;*.rbc;*.yarb;*~;.DS_Store;.git;.hg;.svn;CVS;__pycache__;_svn;vssver.scc;vssver2.scc;" />
+    <extensionMap>
+      <mapping pattern="server" type="Python" />
+      <mapping pattern="__init__" type="Python" />
+      <mapping pattern="apiserver" type="Python" />
+      <mapping pattern="monitor" type="Python" />
+      <mapping ext="conf" type="Python" />
+    </extensionMap>
+  </component>
+</application>
