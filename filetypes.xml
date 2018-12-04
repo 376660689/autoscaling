@@ -4,10 +4,11 @@
     <extensionMap>
       <mapping pattern="note" type="PLAIN_TEXT" />
       <mapping pattern="server" type="Python" />
-      <mapping pattern="__init__" type="Python" />
-      <mapping pattern="apiserver" type="Python" />
       <mapping pattern="monitor" type="Python" />
+      <mapping pattern="apiserver" type="Python" />
+      <mapping pattern="__init__" type="Python" />
       <mapping ext="conf" type="Python" />
+      <mapping pattern="tt" type="YAML" />
     </extensionMap>
   </component>
 </application>
