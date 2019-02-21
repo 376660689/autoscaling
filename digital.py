@@ -76,9 +76,3 @@ class digital:
             return True
         else:
             raise DeleteFaild("delete droplet faild!")
-
-
-#a=digital(DIGITAL_CONF_OBJ.token).tag_droplets('rmroot_autoscaling')
-#print(a)
-#a=digital(DIGITAL_CONF_OBJ.token).create_mul_droplets('rmroot', 2)
-#a=digital(DIGITAL_CONF_OBJ.token).delete_droplet(133104904,)

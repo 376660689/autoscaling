@@ -20,8 +20,7 @@ class MySql:
         if not key or not table or not values:
             raise ValueEmpty("args null table:%s key:%s values:%s" % (key, table, values))
         sql = "replace into %s(%s) values(%s);" % (table, ','.join(['`%s`' % x for x in key]), ','.join(['%s' for x in key]))
-        print(sql)
-        print(values)
+
         try:
             self.cur.executemany(sql, values)
             self.conn.commit()
@@ -65,8 +64,7 @@ class MySql:
                 else:
                     value.append('`%s`="%s"' % (index, where[index]))
         sql = "select %s from `%s` where %s" % (','.join(key), table, ' and '.join(value))
-        print(sql)
-        print(value)
+
         try:
             self.cur.execute(sql)
             reslut = self.cur.fetchall()
@@ -78,9 +76,3 @@ class MySql:
     def __del__(self):
         self.cur.close()
         self.conn.close()
-
-#con=MySql(host='localhost',user='root',passwd='XB2henshui%')
-#con.insert(table='hostgroups', key=['groupname', 'groupid'], values=[('h1',3), ('h2',4 ), ('h3',5 )])
-#con.delete(table='hostgroups', where={'groupid':5, 'groupname':'h3'})
-#con.select(table="hostgroups", key=['groupid'], where={'groupid':2})
-#con.insert(table='hosts', key=['hostname','hostid','public','private','size','region','tags','snapshotid','group'], values=[('template', 130740838, '157.230.218.131', 'null', 's-1vcpu-1gb', 'nyc1', 'rmroot', 43015793, 'rmroot')])
