@@ -5,8 +5,6 @@ from setting import qps_CONF
 from setting import logging
 from db import MySql
 from share import write_droplet_db
-from
-
 import time
 
 def check_full(dbconn=dbconn, exist_program={}):
@@ -15,9 +13,8 @@ def check_full(dbconn=dbconn, exist_program={}):
         if half_group:
             program_names = []
             for program_name in [g[0] for g in group]:
-                if program_name not in program_names and program_name in program_name.keys:
+                if program_name not in program_names and program_name in exist_program.keys:
                     program_names.append(program_name)
-
             return program_names
         else:
             return []
@@ -41,3 +38,4 @@ if __name__ == "__main__":
             break
 
     if not half_groups:
+        pass

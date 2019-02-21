@@ -1,5 +1,5 @@
 import pymysql
-import logging
+
 class Error(Exception):
     pass
 
@@ -18,8 +18,10 @@ class MySql:
             values list data            values=[('field1', field2), ('fiedl1', field2)]
         '''
         if not key or not table or not values:
-            raise ValueEmpty("args is null")
+            raise ValueEmpty("args null table:%s key:%s values:%s" % (key, table, values))
         sql = "replace into %s(%s) values(%s);" % (table, ','.join(['`%s`' % x for x in key]), ','.join(['%s' for x in key]))
+        print(sql)
+        print(values)
         try:
             self.cur.executemany(sql, values)
             self.conn.commit()
@@ -55,12 +57,16 @@ class MySql:
 
         value=[]
         for index in where:
-            if isinstance(where[index], float) or isinstance(where[index], int):
-                value.append('`%s`=%s' % (index, where[index]))
+            if where[index] == 'null':
+                value.append('`%s` is null' % index)
             else:
-                value.append('`%s`="%s"' % (index, where[index]))
-        sql = "select `%s` from `%s` where %s" % (','.join(key), table, ' and '.join(value))
-
+                if isinstance(where[index], float) or isinstance(where[index], int):
+                    value.append('`%s`=%s' % (index, where[index]))
+                else:
+                    value.append('`%s`="%s"' % (index, where[index]))
+        sql = "select %s from `%s` where %s" % (','.join(key), table, ' and '.join(value))
+        print(sql)
+        print(value)
         try:
             self.cur.execute(sql)
             reslut = self.cur.fetchall()

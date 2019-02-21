@@ -22,9 +22,9 @@ class digital:
     def __droplet_info(self, data):
         values = {}
         for droplet_info in data:
-            values[droplet_info.ip_address] = {
+            values[droplet_info.id] = {
                 "hostname": droplet_info.name,
-                "hostid": droplet_info.id,
+                "public": 'null' if droplet_info.ip_address is None else droplet_info.ip_address,
                 "private": 'null' if droplet_info.private_ip_address is None else droplet_info.private_ip_address,
                 "size_slug": droplet_info.size_slug,
                 "region": droplet_info.region["slug"],
@@ -38,7 +38,12 @@ class digital:
         if droplets:
             return self.__droplet_info(droplets)
         else:
-            return None
+            return {}
+
+    def id_droplet(self, droplet_id):
+        if not droplet_id:
+            raise ValueEmpty("droplet_id not allowd empty")
+        return self._DIGITAL_MANAGE_OBJ.get_droplet(droplet_id=droplet_id)
 
     def create_mul_droplets(self, tag, number):
         if not tag and not number:
@@ -47,17 +52,18 @@ class digital:
         names = ["%s-%s" % (tag, time.time()) for j in range(number)]
         template = self.tag_droplets(tag)
         if template and len(template) == 1:
-            for public in template:
-                self._DIGITAL_DROPLET_OBJ.create_multiple(
+            for hostid in template:
+                droplets = self._DIGITAL_DROPLET_OBJ.create_multiple(
                     token=self.token,
                     names=names,
-                    size_slug=template[public]["size_slug"],
-                    image=template[public]["snapshot_ids"],
-                    region=template[public]["region"],
+                    size_slug=template[hostid]["size_slug"],
+                    image=template[hostid]["snapshot_ids"],
+                    region=template[hostid]["region"],
                     tags=["%s_autoscaling" % tag],
                     monitoring=True,
                     private_networking=True
                 )
+                return droplets if droplets else []
         else:
             raise ValueEmpty("template droplet is too many")
 
