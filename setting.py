@@ -44,7 +44,7 @@ class mysql_CONF:
     db = "autoscaling"
 
 class digital_CONF:
-    token = "126b2275fd7b10f30a81891d0d7749f91f000056c8013c87f0af7584313d68bc"
+    token = "126b2275fd7b10f30a81891d0d7749f91f000056c80187f0a584313d68bc"
 
 class zabbix_CONF:
     url = "http://128.199.233.164/zabbix/api_jsonrpc.php"
