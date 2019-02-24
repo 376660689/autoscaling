@@ -4,7 +4,7 @@ from setting import digital_CONF
 from setting import qps_CONF
 from setting import logging
 from db import MySql
-from share import write_droplet_db
+from share import PublicIsNull
 import time
 
 def check_full(dbconn=dbconn, exist_program={}):
@@ -23,19 +23,12 @@ def check_full(dbconn=dbconn, exist_program={}):
 
 if __name__ == "__main__":
     dbconn = MySql(host=mysql_CONF.host, user=mysql_CONF.user, passwd=mysql_CONF.passwd, port=mysql_CONF.port, db=mysql_CONF.db)
-    for count in range(10):
-        half_groups = check_full(dbconn=dbconn, program_name=qps_CONF.interface)
-        if half_groups:
-            for program_name in half_groups:
-                write_droplet_db(tag="%s_autoscaling" % program_name,
-                                 token=digital_CONF.token,
-                                 group=program_name,
-                                 dbconn=dbconn
-                                 )
-            logging.warning("Incomplete server information, %s" % half_group)
-            time.sleep(60)
-        else:
-            break
+    for program_name in half_groups:
+        PublicIsNull(group=program_name,
+                token=digital_CONF.token,
+                dbconn=dbconn
+        )
 
-    if not half_groups:
+    half_groups = check_full(dbconn=dbconn, program_name=qps_CONF.interface)
+    if half_groups:
         pass

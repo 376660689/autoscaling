@@ -5,7 +5,9 @@ from setting import qps_CONF
 from db import MySql
 from setting import logging
 from share import InDroletNotDb, InDbNotDroplet, PublicIsNull
-
+from BaseZabbix import get_hostid, delete_host
+from pyzabbix import ZabbixAPI
+from setting import zabbix_CONF
 
 from urllib.parse import urljoin
 import requests
@@ -166,6 +168,9 @@ if __name__ == "__main__":
         elif change_droplet_num < 0:
             delete_droplet_ids = get_delete_id(program_name, -change_droplet_num, dbconn=dbconn)
             if delete_droplet_ids:
+                zabi = ZabbixAPI(zabbix_CONF.url)
+                zabi.login(zabbix_CONF.user, zabbix_CONF.passwd)
+
                 if -change_droplet_num >= len(delete_droplet_ids):
                     for delete_droplet_id in delete_droplet_ids:
                         d_status = DIGITAL_OBJ.delete_droplet(delete_droplet_id[0])
@@ -179,6 +184,9 @@ if __name__ == "__main__":
                         if d_status:
                             dbconn.delete(table='hosts', where={'hostid': delete_droplet_ids[index][0]})
                             logging.debug("delete droplet ids %s, index %s" % (delete_droplet_ids, index))
+
+
+
 
     ###############################################################################################
         #检测数据库数据完整性

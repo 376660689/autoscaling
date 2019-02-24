@@ -9,7 +9,7 @@ class ValueEmpty(Error):
 
 def InDroletNotDb(token=None, dbconn=None, group=None):
     if not token or not dbconn or not group:
-        raise "token or dbconn or group is None"
+        raise ValueEmpty("token or dbconn or group is None")
     try:
         digital_manager = digital(token)
     except Exception as msg:
@@ -125,7 +125,16 @@ def PublicIsNull(token=None, dbconn=None, group=None):
                 )
             )
         insert_status = dbconn.insert(table="hosts",
-                                  key=["hostname", "hostid", "public", "private", "size", "region", "tags", "snapshotid", "group"],
+                                  key=["hostname",
+                                       "hostid",
+                                       "public",
+                                       "private",
+                                       "size",
+                                       "region",
+                                       "tags",
+                                       "snapshotid",
+                                       "group"
+                                       ],
                                   values=droplets_info,
                                   )
 

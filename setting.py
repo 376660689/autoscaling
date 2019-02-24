@@ -44,10 +44,14 @@ class mysql_CONF:
     db = "autoscaling"
 
 class digital_CONF:
-    token = "126b2275fd7b10f30a81891d0d7749f91f000056c80187f0a584313d68bc"
+    token = "4e770c468a5892f669bee4374b7386130c5fbd0497cd3e8235498620ce"
 
 class zabbix_CONF:
     url = "http://128.199.233.164/zabbix/api_jsonrpc.php"
     template = {
-        "rmroot": "rmroot_template"
+        "rmroot": "rmroot_template",
+        "localhost": "localhost_template"
     }
+
+    user = 'admin'
+    passwd = 'zabbix'
